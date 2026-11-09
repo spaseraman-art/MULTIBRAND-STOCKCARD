@@ -59,3 +59,4 @@ Opens at `http://localhost:5173`.
 - No CSV/Excel export button yet, per our conversation about keeping cross-location analytics in spreadsheets.
 
 None of these block going live for basic use — they're just the next round.
+
