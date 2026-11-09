@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  base: '/OQEAN-STOCK-CARD/',
+  base: '/NEWBRAND-Stock/',
   build: {
     outDir: 'docs',
     emptyOutDir: true,
