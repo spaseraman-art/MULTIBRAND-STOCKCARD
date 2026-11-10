@@ -593,3 +593,30 @@ export async function markIncomingReceived(shipment) {
   }
   return full;
 }
+/* ---------- Brand Settings ---------- */
+export async function getBrandSettings() {
+  const { data, error } = await supabase
+    .from('brand_settings')
+    .select('*')
+    .limit(1)
+    .maybeSingle();
+  if (error) throw error;
+  return data;
+}
+
+export async function updateBrandSettings(brand_name) {
+  // Check if a row exists
+  const current = await getBrandSettings();
+  if (current) {
+    const { error } = await supabase
+      .from('brand_settings')
+      .update({ brand_name })
+      .eq('id', current.id);
+    if (error) throw error;
+  } else {
+    const { error } = await supabase
+      .from('brand_settings')
+      .insert({ brand_name });
+    if (error) throw error;
+  }
+}
