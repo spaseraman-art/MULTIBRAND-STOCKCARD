@@ -37,3 +37,6 @@ document.querySelectorAll('.nav-item').forEach(item => {
 });
 
 activate('summary');
+import * as settings from './views/settings.js';
+// ... inside the 'views' object add:
+settings: { mod: settings, title: 'Brand Settings', sub: 'Manage your brand name' },
