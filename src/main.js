@@ -7,6 +7,8 @@ import * as sales from './views/sales.js';
 import * as invoices from './views/invoices.js';
 import * as opname from './views/opname.js';
 import * as master from './views/master.js';
+import * as settings from './views/settings.js'; // <-- ADDED
+import { getBrandSettings } from './db.js';      // <-- ADDED
 
 const views = {
   summary: { mod: summary, title: 'Summary', sub: 'Consignment stock overview across all locations' },
@@ -17,6 +19,7 @@ const views = {
   invoices: { mod: invoices, title: 'Invoices', sub: 'Monthly consignee invoices, tallied from Sales Entry' },
   opname: { mod: opname, title: 'Stock Opname', sub: 'Physical stock count per location' },
   master: { mod: master, title: 'Master Data', sub: 'Products, locations, and commission rates' },
+  settings: { mod: settings, title: 'Settings', sub: 'Manage your brand name' }, // <-- ADDED
 };
 
 const content = document.getElementById('content');
@@ -35,14 +38,17 @@ async function activate(viewKey) {
 document.querySelectorAll('.nav-item').forEach(item => {
   item.addEventListener('click', () => activate(item.dataset.view));
 });
-import { getBrandSettings } from './db.js';
 
+// Fetch brand name for the sidebar
 getBrandSettings().then(settings => {
   if (settings?.brand_name) {
     document.getElementById('sidebar-brand-name').textContent = settings.brand_name;
+  } else {
+    document.getElementById('sidebar-brand-name').textContent = 'My Brand';
   }
-}).catch(console.error);
+}).catch(err => {
+  console.error("Failed to load brand settings:", err);
+  document.getElementById('sidebar-brand-name').textContent = 'My Brand';
+});
+
 activate('summary');
-import * as settings from './views/settings.js';
-// ... inside the 'views' object add:
-settings: { mod: settings, title: 'Brand Settings', sub: 'Manage your brand name' },
