@@ -35,7 +35,13 @@ async function activate(viewKey) {
 document.querySelectorAll('.nav-item').forEach(item => {
   item.addEventListener('click', () => activate(item.dataset.view));
 });
+import { getBrandSettings } from './db.js';
 
+getBrandSettings().then(settings => {
+  if (settings?.brand_name) {
+    document.getElementById('sidebar-brand-name').textContent = settings.brand_name;
+  }
+}).catch(console.error);
 activate('summary');
 import * as settings from './views/settings.js';
 // ... inside the 'views' object add:
